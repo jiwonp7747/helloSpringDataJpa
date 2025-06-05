@@ -8,7 +8,10 @@
 </head>
 
 <body>
-<div class="d-flex justify-content-end p-3">
+<div class="d-flex justify-content-end align-items-center p-3">
+    <a th:href="@{/products}" class="btn btn-outline-primary me-2">상품 페이지</a>
+
+    <!-- 로그아웃 -->
     <form th:action="@{/logout}" method="post" class="mb-0">
         <button type="submit" class="btn btn-outline-secondary">Logout</button>
     </form>

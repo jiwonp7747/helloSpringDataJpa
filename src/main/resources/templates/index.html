@@ -9,11 +9,16 @@
 </head>
 
 <body>
-<div class="d-flex justify-content-end p-3">
+<div class="d-flex justify-content-end align-items-center p-3">
+  <!-- 관리자 페이지 이동 -->
+  <a th:href="@{/admin}" class="btn btn-outline-primary me-2">관리자 페이지</a>
+
+  <!-- 로그아웃 -->
   <form th:action="@{/logout}" method="post" class="mb-0">
     <button type="submit" class="btn btn-outline-secondary">Logout</button>
   </form>
 </div>
+
 <div class="container">
   <h1 class="mt-5">Product List</h1>
   <a sec:authorize="hasRole('ADMIN')" class="btn btn-primary mb-3" th:href="@{/products/new}">Create New Product</a>
