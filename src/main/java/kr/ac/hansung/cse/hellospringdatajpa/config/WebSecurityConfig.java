@@ -3,6 +3,7 @@ package kr.ac.hansung.cse.hellospringdatajpa.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -38,13 +39,15 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests(authz->authz
                         .requestMatchers(PUBLIC_MATCHERS).permitAll()
-                        .requestMatchers("/", "/home", "sign_up").permitAll()
+                        .requestMatchers("/", "/sign_up", "/login").permitAll()
+                        .requestMatchers("/products").hasRole("USER")
+                        .requestMatchers("/products/**").hasRole("ADMIN")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(formLogin->formLogin
                         .loginPage("/login")
-                        .defaultSuccessUrl("/home")
+                        .defaultSuccessUrl("/")
                         .failureUrl("/login?error")
                         .permitAll()
                 )
