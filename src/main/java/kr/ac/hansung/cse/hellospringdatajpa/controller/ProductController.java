@@ -44,7 +44,7 @@ public class ProductController {
         Product product = service.get(id);
         model.addAttribute("product", product);
 
-        return "edit_product"   ;
+        return "edit_product";
     }
 
     // @ModelAttribute는  Form data (예: name=Laptop&brand=Samsung&madeIn=Korea&price=1000.00)를 Product 객체
@@ -58,6 +58,20 @@ public class ProductController {
         if (result.hasErrors()) {
             log.info("result has errors: {}", result.getAllErrors());
             return "new_product";
+        }
+
+        service.save(product);
+        return "redirect:/products";
+    }
+
+    @PostMapping("/edit")
+    public String editProduct(
+            @Valid @ModelAttribute("product") Product product,
+            BindingResult result
+    ) {
+        if (result.hasErrors()) {
+            log.info("result has errors: {}", result.getAllErrors());
+            return "edit_product";
         }
 
         service.save(product);
