@@ -40,7 +40,7 @@ public class ProductController {
         Product product = service.get(id);
         model.addAttribute("product", product);
 
-        return "edit_product";
+        return "edit_product"   ;
     }
 
     // @ModelAttribute는  Form data (예: name=Laptop&brand=Samsung&madeIn=Korea&price=1000.00)를 Product 객체

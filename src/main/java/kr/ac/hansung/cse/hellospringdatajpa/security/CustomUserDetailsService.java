@@ -33,7 +33,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     public Collection<? extends GrantedAuthority> getAuthorities(User userEntity) {
         return userEntity.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRolename()))
+                .map(role -> new SimpleGrantedAuthority("ROLE_"+role.getRolename()))
                 .toList();
     }
 }
