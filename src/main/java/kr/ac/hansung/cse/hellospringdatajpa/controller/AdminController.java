@@ -7,6 +7,7 @@ import kr.ac.hansung.cse.hellospringdatajpa.repo.RoleRepository;
 import kr.ac.hansung.cse.hellospringdatajpa.repo.UserRepository;
 import kr.ac.hansung.cse.hellospringdatajpa.service.RoleService;
 import kr.ac.hansung.cse.hellospringdatajpa.service.UserService;
+import kr.ac.hansung.cse.hellospringdatajpa.session.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +27,8 @@ public class AdminController {
     private RoleService roleService;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private SessionService sessionService;
 
     @RequestMapping(path = "", method = RequestMethod.GET)
     public String adminPage(Model model) {
@@ -65,6 +68,7 @@ public class AdminController {
         if(!user.hasRole("ADMIN")){
             user.getRoles().add(adminRole);
             userRepository.save(user);
+            sessionService.expireUserSessions(user.getEmail());
         }
         return "redirect:/admin";
     }
@@ -79,6 +83,7 @@ public class AdminController {
         if(user.hasRole("ADMIN")){
             user.getRoles().remove(adminRole);
             userRepository.save(user);
+            sessionService.expireUserSessions(user.getEmail());
         }
         return "redirect:/admin";
     }
