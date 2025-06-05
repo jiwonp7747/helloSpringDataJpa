@@ -29,5 +29,9 @@ public class User {
             joinColumns={@JoinColumn(name="USER_ID", referencedColumnName="ID")},
             inverseJoinColumns={@JoinColumn(name="ROLE_ID", referencedColumnName="ID")})
     private List<Role> roles;
+
+    public boolean hasRole(String roleName) {
+        return roles.stream().anyMatch(r -> r.getRolename().equals(roleName));
+    }
 }
 

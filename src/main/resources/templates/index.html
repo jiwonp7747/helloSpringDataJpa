@@ -16,7 +16,7 @@
 </div>
 <div class="container">
   <h1 class="mt-5">Product List</h1>
-  <a class="btn btn-primary mb-3" th:href="@{/products/new}">Create New Product</a>
+  <a sec:authorize="hasRole('ADMIN')" class="btn btn-primary mb-3" th:href="@{/products/new}">Create New Product</a>
 
   <table class="table table-bordered">
     <thead>

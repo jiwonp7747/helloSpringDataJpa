@@ -40,4 +40,16 @@ public class UserService {
     public Role findByRolename(String rolename){
         return roleRepository.findByRolename(rolename).orElseThrow(() -> new RuntimeException("Role not found"));
     }
+
+    public List<User> findAllUsers(){
+        return userRepository.findAll();
+    }
+
+    public void deleteUser(User user) {
+        userRepository.delete(user);
+    }
+
+    public User findUserById(Integer userId) {
+        return userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+    }
 }

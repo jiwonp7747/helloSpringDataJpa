@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:insert="~{common :: commonHead}">
+    <title>Admin Page</title>
+</head>
+
+<body>
+<div class="d-flex justify-content-end p-3">
+    <form th:action="@{/logout}" method="post" class="mb-0">
+        <button type="submit" class="btn btn-outline-secondary">Logout</button>
+    </form>
+</div>
+
+<div class="container">
+    <h1 class="mt-5 text-center">User Management</h1>
+    <br />
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>User ID</th>
+            <th>Roles</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}">ID</td>
+            <td>
+                <ul>
+                    <li th:each="role : ${user.roles}" th:text="${role.rolename}">ROLE</li>
+                </ul>
+            </td>
+            <td>
+                <div class="d-flex gap-2">
+                    <!-- Grant ADMIN 버튼 -->
+                    <form th:if="${!user.getIsAdmin()}"
+                          th:action="@{'/admin/grant/' + ${user.id}}" method="post">
+                        <button type="submit" class="btn btn-success btn-sm">Grant ADMIN</button>
+                    </form>
+
+                    <!-- Revoke ADMIN 버튼 -->
+                    <form th:if="${user.getIsAdmin()}"
+                          th:action="@{'/admin/revoke/' + ${user.id}}" method="post">
+                        <button type="submit" class="btn btn-warning btn-sm"
+                                onclick="return confirm('관리자 권한을 제거하시겠습니까?');">Revoke ADMIN</button>
+                    </form>
+
+                    <!-- Delete 버튼 -->
+                    <form th:action="@{'/admin/delete/' + ${user.id}}" method="post">
+                        <button type="submit" class="btn btn-danger btn-sm"
+                                onclick="return confirm('정말로 삭제하시겠습니까?');">Delete</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:insert="~{common :: commonScript}"></div>
+</body>
+</html>
